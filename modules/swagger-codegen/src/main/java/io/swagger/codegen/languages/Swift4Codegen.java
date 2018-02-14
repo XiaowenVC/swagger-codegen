@@ -103,7 +103,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         modelTemplateFiles.put("model.mustache", ".swift");
         apiTemplateFiles.put("api.mustache", ".swift");
         embeddedTemplateDir = templateDir = "swift4";
-        apiPackage = File.separator + "APIs";
+        apiPackage = File.separator + "Services";
         modelPackage = File.separator + "Models";
 
         languageSpecificPrimitives = new HashSet<>(
@@ -140,7 +140,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
                     "ErrorResponse", "Response",
 
                     // Added for Objective-C compatibility
-                    "id", "description", "NSArray", "NSURL", "CGFloat", "NSSet", "NSString", "NSInteger", "NSUInteger",
+                    /*"id", */"description", "NSArray", "NSURL", "CGFloat", "NSSet", "NSString", "NSInteger", "NSUInteger",
                     "NSError", "NSDictionary", 
 
                     //
