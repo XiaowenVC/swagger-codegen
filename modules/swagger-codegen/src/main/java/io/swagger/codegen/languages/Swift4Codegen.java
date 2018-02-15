@@ -4,14 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
-import io.swagger.codegen.CliOption;
-import io.swagger.codegen.CodegenConfig;
-import io.swagger.codegen.CodegenConstants;
-import io.swagger.codegen.CodegenModel;
-import io.swagger.codegen.CodegenProperty;
-import io.swagger.codegen.CodegenType;
-import io.swagger.codegen.DefaultCodegen;
-import io.swagger.codegen.SupportingFile;
+import io.swagger.codegen.*;
 
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
@@ -496,13 +489,13 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
         }
         return null;
     }
-
-    @Override
+	
+	@Override
     public String toApiName(String name) {
         if (name.length() == 0) {
-            return "DefaultAPI";
+            return "DefaultService";
         }
-        return initialCaps(name) + "API";
+        return initialCaps(name) + "Service";
     }
 
     @Override
@@ -770,6 +763,18 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
             // which provide Objective-C compatibility.
             property.vendorExtensions.put("x-swift-optional-scalar", true);
         }
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger) {
+        path = path.replaceAll("^/", "").replaceAll("/$", "");
+        return super.fromOperation(path, httpMethod, operation, definitions, swagger);
+    }
+
+    @Override
+    public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions) {
+        path = path.replaceAll("^/", "").replaceAll("/$", "");
+        return super.fromOperation(path, httpMethod, operation, definitions);
     }
 
     @Override

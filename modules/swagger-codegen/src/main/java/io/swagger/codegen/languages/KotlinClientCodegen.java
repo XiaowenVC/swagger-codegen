@@ -90,10 +90,10 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
             importMapping.put("LocalDateTime", "org.threeten.bp.LocalDateTime");
             defaultIncludes.add("org.threeten.bp.LocalDateTime");
         } else if (DateLibrary.STRING.value.equals(dateLibrary)) {
-            typeMapping.put("date-time", "kotlin.String");
-            typeMapping.put("date", "kotlin.String");
-            typeMapping.put("Date", "kotlin.String");
-            typeMapping.put("DateTime", "kotlin.String");
+            typeMapping.put("date-time", "String");
+            typeMapping.put("date", "String");
+            typeMapping.put("Date", "String");
+            typeMapping.put("DateTime", "String");
         } else if (DateLibrary.JAVA8.value.equals(dateLibrary)) {
             additionalProperties.put(DateLibrary.JAVA8.value, true);
         }
