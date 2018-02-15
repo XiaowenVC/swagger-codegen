@@ -141,24 +141,24 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         typeMapping.put("float", "Float");
         typeMapping.put("long", "Long");
         typeMapping.put("double", "Double");
-        typeMapping.put("number", "java.math.BigDecimal");
-        typeMapping.put("date-time", "java.time.LocalDateTime");
-        typeMapping.put("date", "java.time.LocalDateTime");
+        typeMapping.put("number", "Double");
+        typeMapping.put("date-time", "Calendar");
+        typeMapping.put("date", "Calendar");
         typeMapping.put("file", "java.io.File");
         typeMapping.put("array", "Array");
         typeMapping.put("list", "Array");
         typeMapping.put("map", "Map");
         typeMapping.put("object", "Any");
         typeMapping.put("binary", "Array<Byte>");
-        typeMapping.put("Date", "java.time.LocalDateTime");
-        typeMapping.put("DateTime", "java.time.LocalDateTime");
+        typeMapping.put("Date", "Calendar");
+        typeMapping.put("DateTime", "Calendar");
 
         instantiationTypes.put("array", "arrayOf");
         instantiationTypes.put("list", "arrayOf");
         instantiationTypes.put("map", "mapOf");
 
         importMapping = new HashMap<String, String>();
-        importMapping.put("BigDecimal", "java.math.BigDecimal");
+        importMapping.put("BigDecimal", "Double");
         importMapping.put("UUID", "java.util.UUID");
         importMapping.put("File", "java.io.File");
         importMapping.put("Date", "java.util.Date");
@@ -167,6 +167,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         importMapping.put("LocalDateTime", "java.time.LocalDateTime");
         importMapping.put("LocalDate", "java.time.LocalDate");
         importMapping.put("LocalTime", "java.time.LocalTime");
+        importMapping.put("Calendar", "java.util.Calendar");
 
         specialCharReplacements.put(";", "Semicolon");
 
@@ -466,14 +467,23 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
             return importMapping.get(name);
         }
 
-        String modifiedName = name.replaceAll("\\.", "");
+        String modifiedName = name.replaceAll("\\.", "").replaceAll("-", "_");
         modifiedName = sanitizeKotlinSpecificNames(modifiedName);
 
         if (reservedWords.contains(modifiedName)) {
             modifiedName = escapeReservedWord(modifiedName);
         }
 
+        modifiedName = titleCase(modifiedName);
+        modifiedName = camelize(modifiedName);
+
         return titleCase(modifiedName);
+    }
+
+    @Override
+    public String toModelFilename(String name) {
+        // should be the same as the model name
+        return toModelName(name.replace("-", "_"));
     }
 
     /**
@@ -551,6 +561,55 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, Map<String, Model> definitions) {
         path = path.replaceAll("^/", "").replaceAll("/$", "");
         return super.fromOperation(path, httpMethod, operation, definitions);
+    }
+
+    @Override
+    public String toVarName(String name) {
+        // sanitize name
+        name = sanitizeName(name);
+
+        name = name.replaceAll("-", "_");
+
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$")) {
+            return name;
+        }
+
+        // camelize the variable name
+        // pet_id => petId
+        name = camelize(name, true);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
+    }
+
+    @Override
+    public String toParamName(String name) {
+        // sanitize name
+        name = sanitizeName(name);
+
+        // replace - with _ e.g. created-at => created_at
+        name = name.replaceAll("-", "_");
+
+        // if it's all uppper case, do nothing
+        if (name.matches("^[A-Z_]*$")) {
+            return name;
+        }
+
+        // camelize(lower) the variable name
+        // pet_id => petId
+        name = camelize(name, true);
+
+        // for reserved word or word starting with number, append _
+        if (isReservedWord(name) || name.matches("^\\d.*")) {
+            name = escapeReservedWord(name);
+        }
+
+        return name;
     }
 
     /**

@@ -2,6 +2,6 @@
   "podSummary": "Vestiaire API Client",
   "podHomepage": "",
   "podAuthors": "",
-  "projectName": "VCAPI",
+  "projectName": "VestiaireApi",
   "responseAs": "RxSwift"
 }

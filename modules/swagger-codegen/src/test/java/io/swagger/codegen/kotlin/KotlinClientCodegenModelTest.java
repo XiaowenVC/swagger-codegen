@@ -80,10 +80,10 @@ public class KotlinClientCodegenModelTest {
 
         final CodegenProperty property3 = cm.vars.get(2);
         Assert.assertEquals(property3.baseName, "createdAt");
-        Assert.assertEquals(property3.datatype, "java.time.LocalDateTime");
+        Assert.assertEquals(property3.datatype, "java.util.Calendar");
         Assert.assertEquals(property3.name, "createdAt");
         Assert.assertEquals(property3.defaultValue, "null");
-        Assert.assertEquals(property3.baseType, "java.time.LocalDateTime");
+        Assert.assertEquals(property3.baseType, "java.util.Calendar");
         Assert.assertFalse(property3.hasMore);
         Assert.assertFalse(property3.required);
         Assert.assertTrue(property3.isNotContainer);
@@ -140,10 +140,10 @@ public class KotlinClientCodegenModelTest {
 
         final CodegenProperty property3 = cm.vars.get(2);
         Assert.assertEquals(property3.baseName, "createdAt");
-        Assert.assertEquals(property3.datatype, "java.time.LocalDateTime");
+        Assert.assertEquals(property3.datatype, "java.util.Calendar");
         Assert.assertEquals(property3.name, "createdAt");
         Assert.assertEquals(property3.defaultValue, "null");
-        Assert.assertEquals(property3.baseType, "java.time.LocalDateTime");
+        Assert.assertEquals(property3.baseType, "java.util.Calendar");
         Assert.assertFalse(property3.hasMore);
         Assert.assertFalse(property3.required);
         Assert.assertTrue(property3.isNotContainer);
@@ -221,9 +221,9 @@ public class KotlinClientCodegenModelTest {
         return new Object[][]{
                 {"TestNs.TestClass", new ModelNameTest("TestNs.TestClass", "TestNsTestClass")},
                 {"$", new ModelNameTest("$", "Dollar")},
-                {"for", new ModelNameTest("`for`", "`for`")},
-                {"One<Two", new ModelNameTest("One<Two", "OneLess_ThanTwo")},
-                {"this is a test", new ModelNameTest("this is a test", "This_is_a_test")}
+                {"for", new ModelNameTest("`for`", "`For`")},
+                {"One<Two", new ModelNameTest("One<Two", "OneLessThanTwo")},
+                {"this is a test", new ModelNameTest("this is a test", "ThisIsATest")}
         };
     }
 

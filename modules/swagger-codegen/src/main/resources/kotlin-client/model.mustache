@@ -6,6 +6,8 @@ package {{modelPackage}}
 {{#threetenbp}}
 import org.threeten.bp.LocalDateTime
 {{/threetenbp}}
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonInclude
 
 {{#models}}
 {{#model}}
