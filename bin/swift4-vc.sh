@@ -29,3 +29,5 @@ export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/
 ags="$@ generate -t modules/swagger-codegen/src/main/resources/swift4 -i /Users/xiaowen/Developer/api-specification/dist/specification.yml -c ./bin/swift4-vc-rxswift.json -l swift4 -o swift"
 
 java $JAVA_OPTS -jar $executable $ags
+
+# sed -i '' '/meta: Any/d' ./swift/VCAPI/Classes/Swaggers/Models/InlineResponse*.swift

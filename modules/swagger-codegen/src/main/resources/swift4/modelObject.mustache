@@ -1,5 +1,5 @@
 
-public struct {{classname}}: Codable {
+public class {{classname}}: Codable {
 
 {{#allVars}}
 {{#isEnum}}
@@ -21,6 +21,14 @@ public struct {{classname}}: Codable {
     }{{/vendorExtensions.x-swift-optional-scalar}}{{/objcCompatible}}
 {{/isEnum}}
 {{/allVars}}
+
+	{{#hasVars}}	
+    public init({{#vars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) {
+		{{#vars}}
+        self.{{name}} = {{name}}
+        {{/vars}}
+    }
+    {{/hasVars}}
 
 {{#additionalPropertiesType}}
     public var additionalProperties: [String:{{{additionalPropertiesType}}}] = [:]

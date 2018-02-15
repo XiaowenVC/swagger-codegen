@@ -141,7 +141,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
 
                     // Added for Objective-C compatibility
                     /*"id", */"description", "NSArray", "NSURL", "CGFloat", "NSSet", "NSString", "NSInteger", "NSUInteger",
-                    "NSError", "NSDictionary", 
+                    "NSError", "NSDictionary", "Notification",
 
                     //
                     // Swift keywords. This list is taken from here:

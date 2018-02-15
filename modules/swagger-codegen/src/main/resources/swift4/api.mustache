@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import RxSwift
 
 {{#description}}
 /** {{description}} */{{/description}}
-open class {{classname}} {
+public class {{classname}}: VCRestService {
 {{#operation}}
     {{#allParams}}
     {{#isEnum}}
@@ -30,7 +31,7 @@ open class {{classname}} {
      - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}}{{/allParams}}
      - returns: Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>
      */
-    open class func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
+    func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
         
 		{{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}".trimmingCharacters(in: CharacterSet(charactersIn: "/")){{#pathParams}}
         let {{paramName}}Escaped = "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})".addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -44,7 +45,7 @@ open class {{classname}} {
         ]
         {{/hasQueryParams}}
 		
-		let req = VCRestRequest(httpMethod: .{{httpMethod}}, path: path{{#hasQueryParams}}, params: params{{/hasQueryParams}}{{#bodyParam}}, body: {{paramName}}{{/bodyParam}})
+		let req = VCRestRequest<{{#bodyParam}}{{{dataType}}}{{/bodyParam}}{{^bodyParam}}Nothing{{/bodyParam}}>(httpMethod: .{{httpMethod}}, path: path{{#hasQueryParams}}, params: params{{/hasQueryParams}}{{#bodyParam}}, body: {{paramName}}{{/bodyParam}})
 		return requester.query(request: req)
     }
 
