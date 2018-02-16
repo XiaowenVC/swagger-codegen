@@ -21,7 +21,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
 
     protected String artifactId;
     protected String artifactVersion = "1.0.0";
-    protected String groupId = "io.swagger";
+    protected String groupId = "fr.vestiairecollective";
     protected String packageName;
 
     protected String sourceFolder = "src/main/kotlin";
@@ -148,7 +148,8 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
         typeMapping.put("array", "Array");
         typeMapping.put("list", "Array");
         typeMapping.put("map", "Map");
-        typeMapping.put("object", "Any");
+//        typeMapping.put("object", "Any");
+        typeMapping.put("object", "Empty");
         typeMapping.put("binary", "Array<Byte>");
         typeMapping.put("Date", "Calendar");
         typeMapping.put("DateTime", "Calendar");

@@ -38,7 +38,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         super();
 
         artifactId = "kotlin-client";
-        packageName = "io.swagger.client";
+        packageName = "fr.vestiairecollective.network.redesign";
 
         outputFolder = "generated-code" + File.separator + "kotlin-client";
         modelTemplateFiles.put("model.mustache", ".kt");
@@ -46,8 +46,8 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         modelDocTemplateFiles.put("model_doc.mustache", ".md");
         apiDocTemplateFiles.put("api_doc.mustache", ".md");
         embeddedTemplateDir = templateDir = "kotlin-client";
-        apiPackage = packageName + ".apis";
-        modelPackage = packageName + ".models";
+        apiPackage = packageName + ".api";
+        modelPackage = packageName + ".model";
 
         CliOption dateLibrary = new CliOption(DATE_LIBRARY, "Option. Date library to use");
         Map<String, String> dateOptions = new HashMap<>();
@@ -104,6 +104,7 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         supportingFiles.add(new SupportingFile("settings.gradle.mustache", "", "settings.gradle"));
 
         final String infrastructureFolder = (sourceFolder + File.separator + packageName + File.separator + "infrastructure").replace(".", "/");
+        final String modelFolder = (sourceFolder + File.separator + packageName + File.separator + "model").replace(".", "/");
 
         supportingFiles.add(new SupportingFile("infrastructure/ApiClient.kt.mustache", infrastructureFolder, "ApiClient.kt"));
         supportingFiles.add(new SupportingFile("infrastructure/ApiAbstractions.kt.mustache", infrastructureFolder, "ApiAbstractions.kt"));
@@ -114,5 +115,6 @@ public class KotlinClientCodegen extends AbstractKotlinCodegen {
         supportingFiles.add(new SupportingFile("infrastructure/ResponseExtensions.kt.mustache", infrastructureFolder, "ResponseExtensions.kt"));
         supportingFiles.add(new SupportingFile("infrastructure/Serializer.kt.mustache", infrastructureFolder, "Serializer.kt"));
         supportingFiles.add(new SupportingFile("infrastructure/Errors.kt.mustache", infrastructureFolder, "Errors.kt"));
+        supportingFiles.add(new SupportingFile("Empty.mustache", modelFolder, "Empty.kt"));
     }
 }
