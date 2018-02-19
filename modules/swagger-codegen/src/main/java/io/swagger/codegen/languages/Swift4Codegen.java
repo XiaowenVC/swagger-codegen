@@ -133,7 +133,7 @@ public class Swift4Codegen extends DefaultCodegen implements CodegenConfig {
                     "ErrorResponse", "Response",
 
                     // Added for Objective-C compatibility
-                    /*"id", */"description", "NSArray", "NSURL", "CGFloat", "NSSet", "NSString", "NSInteger", "NSUInteger",
+                    /*"id", "description",*/ "NSArray", "NSURL", "CGFloat", "NSSet", "NSString", "NSInteger", "NSUInteger",
                     "NSError", "NSDictionary", "Notification",
 
                     //

@@ -23,7 +23,7 @@ public class {{classname}}: Codable {
 {{/allVars}}
 
 	{{#hasVars}}	
-    public init({{#vars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) {
+    public init({{#vars}}{{name}}: {{{datatypeWithEnum}}}{{^required}}? = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/vars}}) {
 		{{#vars}}
         self.{{name}} = {{name}}
         {{/vars}}

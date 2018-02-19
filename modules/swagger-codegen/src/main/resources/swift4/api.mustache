@@ -32,11 +32,9 @@ public class {{classname}}: VCRestService {
      - returns: Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}>
      */
     func {{operationId}}({{#allParams}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) -> Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {
-        
 		{{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
         let {{paramName}}Escaped = "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})".addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}Escaped, options: .literal, range: nil){{/pathParams}}
-        
 		{{#hasQueryParams}}
         let params: [String: Any] = [
             {{#queryParams}}
@@ -44,7 +42,6 @@ public class {{classname}}: VCRestService {
             {{/queryParams}}
         ]
         {{/hasQueryParams}}
-		
 		let req = VCRestRequest<{{#bodyParam}}{{{dataType}}}{{/bodyParam}}{{^bodyParam}}Empty{{/bodyParam}}>(httpMethod: .{{httpMethod}}, path: path{{#hasQueryParams}}, params: params{{/hasQueryParams}}{{#bodyParam}}, body: {{paramName}}{{/bodyParam}})
 		return requester.query(request: req)
     }
