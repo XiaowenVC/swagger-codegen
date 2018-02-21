@@ -29,3 +29,7 @@ export JAVA_OPTS="${JAVA_OPTS} -XX:MaxPermSize=256M -Xmx1024M -DloggerPath=conf/
 ags="generate -t modules/swagger-codegen/src/main/resources/kotlin-client -i /Users/xiaowen/Developer/api-specification/dist/specification.yml -l kotlin --artifact-id kotlin-vc-client -o kotlin $@"
 
 java ${JAVA_OPTS} -jar ${executable} ${ags}
+cd kotlin/src/main/kotlin/fr/vestiairecollective/network/redesign/model
+sed -i.bak 's/, )/)/' *.kt
+rm *.bak
+cd -

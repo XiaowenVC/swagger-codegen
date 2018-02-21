@@ -7,6 +7,7 @@ import io.swagger.models.Swagger;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.MapProperty;
 import io.swagger.models.properties.Property;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     protected String apiDocPath = "docs/";
     protected String modelDocPath = "docs/";
 
-    protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.camelCase;
+    protected CodegenConstants.ENUM_PROPERTY_NAMING_TYPE enumPropertyNaming = CodegenConstants.ENUM_PROPERTY_NAMING_TYPE.original;
 
     public AbstractKotlinCodegen() {
         super();
@@ -66,7 +67,7 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
                 "constructor",
                 "continue",
                 "crossinline",
-                "data",
+//                "data",
                 "delegate",
                 "do",
                 "else",
@@ -425,6 +426,11 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     }
 
     @Override
+    public String toEnumName(CodegenProperty property) {
+        return StringUtils.capitalize(property.name);
+    }
+
+    @Override
     public String toInstantiationType(Property p) {
         if (p instanceof ArrayProperty) {
             return getArrayTypeDeclaration((ArrayProperty) p);
@@ -622,7 +628,6 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
     @Override
     protected boolean needToImport(String type) {
         // provides extra protection against improperly trying to import language primitives and java types
-        boolean imports = !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type);
-        return imports;
+        return !type.startsWith("kotlin.") && !type.startsWith("java.") && !defaultIncludes.contains(type) && !languageSpecificPrimitives.contains(type);
     }
 }
