@@ -16,7 +16,7 @@ interface {{classname}} {
     {{/allParams}}* @return {{#returnType}}Single<{{{returnType}}}>{{/returnType}}{{^returnType}}void{{/returnType}}
     */
 	@{{httpMethod}}("{{path}}")
-    fun {{operationId}}({{#allParams}}{{#isQueryParam}}@Query("{{baseName}}") {{/isQueryParam}}{{#isPathParam}}@Path("{{baseName}}") {{/isPathParam}}{{#isBodyParam}}@Body {{/isBodyParam}}{{paramName}}: {{{dataType}}}{{^required}}?{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): {{#returnType}}Single<{{{returnType}}}>{{/returnType}}{{^returnType}}Unit{{/returnType}}
+    fun {{operationId}}({{#allParams}}{{#isQueryParam}}@Query("{{baseName}}") {{/isQueryParam}}{{#isPathParam}}@Path("{{baseName}}") {{/isPathParam}}{{#isBodyParam}}@Body {{/isBodyParam}}{{paramName}}: {{{dataType}}}{{^required}}? = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}): {{#returnType}}Single<{{{returnType}}}>{{/returnType}}{{^returnType}}Unit{{/returnType}}
     {{/operation}}
 }
 {{/operations}}

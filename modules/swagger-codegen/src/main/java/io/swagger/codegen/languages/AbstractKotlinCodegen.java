@@ -43,13 +43,13 @@ public abstract class AbstractKotlinCodegen extends DefaultCodegen implements Co
                 "Long",
                 "Float",
                 "Double",
-                "Boolean",
-                "Char",
-                "String",
-                "Array",
-                "List",
-                "Map",
-                "Set"
+                "Boolean"
+//                "Char",
+//                "String",
+//                "Array",
+//                "List",
+//                "Map",
+//                "Set"
         ));
 
         // this includes hard reserved words defined by https://github.com/JetBrains/kotlin/blob/master/core/descriptors/src/org/jetbrains/kotlin/renderer/KeywordStringsGenerated.java

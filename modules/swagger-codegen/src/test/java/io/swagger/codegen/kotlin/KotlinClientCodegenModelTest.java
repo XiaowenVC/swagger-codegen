@@ -75,7 +75,7 @@ public class KotlinClientCodegenModelTest {
         Assert.assertEquals(property2.baseType, "String");
         Assert.assertTrue(property2.hasMore);
         Assert.assertTrue(property2.required);
-        Assert.assertTrue(property2.isPrimitiveType);
+//        Assert.assertTrue(property2.isPrimitiveType);
         Assert.assertTrue(property2.isNotContainer);
 
         final CodegenProperty property3 = cm.vars.get(2);
@@ -193,7 +193,7 @@ public class KotlinClientCodegenModelTest {
         Assert.assertEquals(property1.containerType, "map");
         Assert.assertFalse(property1.required);
         Assert.assertTrue(property1.isContainer);
-        Assert.assertTrue(property1.isPrimitiveType);
+//        Assert.assertTrue(property1.isPrimitiveType);
     }
 
     @Test(description = "convert a model with complex property")
