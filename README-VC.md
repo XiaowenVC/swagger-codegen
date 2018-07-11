@@ -1,0 +1,3 @@
+- Run `mvn clean package`
+- Put spec file as `specification.yml` in the project's root folder
+- Run `bin/swift4-vc.sh` or `kotlin-vc.sh`
