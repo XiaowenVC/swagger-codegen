@@ -32,18 +32,19 @@ public class {{classname}}: VCRestService {
      - returns: Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Empty{{/returnType}}>
      */
     public func {{operationId}}({{#allParams}}{{^isHeaderParam}}{{paramName}}: {{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}{{{datatypeWithEnum}}}_{{operationId}}{{/isContainer}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}}{{^required}}? = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/isHeaderParam}}{{/allParams}}) -> Single<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Empty{{/returnType}}> {
-		{{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
+        {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{^secondaryParam}}var{{/secondaryParam}}{{/pathParams}} path = "{{{path}}}"{{#pathParams}}
         let {{paramName}}Escaped = "\({{paramName}}{{#isEnum}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}})".addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         path = path.replacingOccurrences(of: "{{=<% %>=}}{<%baseName%>}<%={{ }}=%>", with: {{paramName}}Escaped, options: .literal, range: nil){{/pathParams}}
-		{{#hasQueryParams}}
-        let params: [String: Any] = [
-            {{#queryParams}}
-            {{> _param}}{{#hasMore}}, {{/hasMore}}
-            {{/queryParams}}
-        ]
-        {{/hasQueryParams}}
-		let req = VCRestRequest<{{#bodyParam}}{{{dataType}}}{{/bodyParam}}{{^bodyParam}}Empty{{/bodyParam}}>(httpMethod: .{{httpMethod}}, path: path{{#hasQueryParams}}, params: params{{/hasQueryParams}}{{#bodyParam}}, body: {{paramName}}{{/bodyParam}})
-		return requester.query(request: req)
+    	{{#hasQueryParams}}
+        var params: [String: Any] = [:]
+        {{#queryParams}}{{#required}}params["{{baseName}}"] = {{paramName}}{{#isEnum}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}
+        {{/required}}{{/queryParams}}
+        {{#queryParams}}{{^required}}if let {{paramName}} = {{paramName}} {
+            params["{{baseName}}"] = {{paramName}}{{#isEnum}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}
+        }
+        {{/required}}{{/queryParams}}{{/hasQueryParams}}
+        let req = VCRestRequest<{{#bodyParam}}{{{dataType}}}{{/bodyParam}}{{^bodyParam}}Empty{{/bodyParam}}>(httpMethod: .{{httpMethod}}, path: path{{#hasQueryParams}}, params: params{{/hasQueryParams}}{{#bodyParam}}, body: {{paramName}}{{/bodyParam}})
+        return requester.query(request: req)
     }
 
 {{/operation}}
