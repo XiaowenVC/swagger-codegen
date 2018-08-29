@@ -18,7 +18,12 @@ import Foundation
 {{> modelEnum}}
 {{/isEnum}}
 {{^isEnum}}
+{{#isAlias}}
+typealias {{classname}} = {{dataType}}
+{{/isAlias}}
+{{^isAlias}}
 {{> modelObject}}
+{{/isAlias}}
 {{/isEnum}}
 {{/isArrayModel}}
 {{/model}}
